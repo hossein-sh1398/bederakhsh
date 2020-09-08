@@ -1,0 +1,19 @@
+{
+    "name": "vandaw/cart",
+    "description": "cart company vandaw",
+    "type": "MIT",
+    "authors": [
+        {
+            "name": "hossien shirinegad",
+            "email": "hosseinshirinegad98@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Vandaw\\Cart\\": "src/"
+        }
+    },
+    "require": {
+        "illuminate/support": "~7"
+    }
+}
