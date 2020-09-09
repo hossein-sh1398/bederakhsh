@@ -12,7 +12,9 @@ class ReportController extends Controller
     public function report()
     {
 
-    	$article = Article::paginate(1);
+        // $article = Article::paginate(1,['title']);
+        // $article = Article::get(['title']);
+    	$article = Article::find(1);
         $dt = new Carbon();
         $views = [];
 

@@ -11,6 +11,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+    	// \Schema::disableForeignKeyConstraints();
         $this->call(UserSeeder::class);
+    	// \Schema::enableForeignKeyConstraints();
+
+    	// برای این که فقط یک سیدر به خصوص اجرا بشه
+    	// php artisan db:seed --class UserTableSeedr
     }
 }

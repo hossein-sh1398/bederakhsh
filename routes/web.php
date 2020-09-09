@@ -5,7 +5,8 @@ use Vandaw\Cart\CartFacade;
 use Illuminate\Notifications\Messages\MailMessage;
 use App\Exceptions\MyException;
 
-Route::get('logerror', function(){
+Route::get('logerror', function() 
+{
 	try {
 		throw new MyException('khataye alaki');
 		
@@ -86,10 +87,10 @@ Route::get( 'cache', 'CacheController@cache' );
 
 Route::get('model', 'ModelController@model');
 
-Route::get('admin', function(){
+Route::get( 'admin', function() {
 	auth()->loginUsingId(1);
 	return view('admin.dashboard');
-});
+} );
 
 Route::get('comment', 'CommentController@index');
 Route::get('comment/{comment}', 'CommentController@verify')->name('comment.verify');
@@ -106,3 +107,10 @@ Route::get('video/{video}', 'VideoController@show');
 
 Route::get('report', 'ReportController@report');
 
+
+
+Route::get('date', function()
+{
+	return App\User::whereDate('created_at', '2020-09-08')
+		->get();
+});

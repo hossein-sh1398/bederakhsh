@@ -47,15 +47,19 @@ class User extends Authenticatable
     //دریافت تمام لایکهای کاربر
     public function likes()
     {
-        return $this->hasMany(Like::class);
+        return $this
+            ->hasMany(Like::class);
     }
 
     // چک میکنه این که آیا کاربر در باره فلان مدل لایکی دارد
     public function liked( $subject )
     {
         return !! $this
-                ->likes()
-                ->where( [ 'likeable_id' => $subject->id, 'likeable_type' => get_class( $subject ) ] )
-                ->count();
+            ->likes()
+            ->where( [ 
+                'likeable_id' => $subject->id, 
+                'likeable_type' => get_class( $subject ) 
+            ] )
+            ->count();
     }
 }

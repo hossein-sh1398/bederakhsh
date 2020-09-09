@@ -40,13 +40,9 @@ function dateViews($viewable_id, $viewable_type, $date)
 
 	$subject = (new $viewable_type)->find($viewable_id);
 	
-	$date = explode('-', $date);
-	
 	return $subject
 		->views()
-		->whereYear('created_at', $date[0])
-		->whereMonth('created_at', $date[1])
-		->whereDay('created_at', $date[2])
+		->whereDate('created_at', $date)
 		->count();
 
 }
@@ -57,13 +53,9 @@ function dateComments($commentable_id, $commentable_type, $date)
 
 	$subject = (new $commentable_type)->find($commentable_id);
 	
-	$date = explode('-', $date);
-	
 	return $subject
 		->comments()
-		->whereYear('created_at', $date[0])
-		->whereMonth('created_at', $date[1])
-		->whereDay('created_at', $date[2])
+		->whereDate('created_at', $date)
 		->count();
 
 }
@@ -74,13 +66,10 @@ function dateLikes($likeable_id, $likeable_type, $date)
 
 	$subject = (new $likeable_type)->find($likeable_id);
 	
-	$date = explode('-', $date);
 	
 	return $subject
 		->likes()
-		->whereYear('created_at', $date[0])
-		->whereMonth('created_at', $date[1])
-		->whereDay('created_at', $date[2])
+		->whereDate('created_at', $date)
 		->count();
 
 }
