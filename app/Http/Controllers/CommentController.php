@@ -78,7 +78,10 @@ class CommentController extends Controller
 			default:
 
 				$comments = Comment::with( 'parent','user', 'commentable' )
-					->where( [ 'approved' => false, 'commentable_type' => subjects()[ 'campaign' ] ] )
+					->where( [ 
+						'approved' => false, 
+						'commentable_type' => subjects()[ 'campaign' ] 
+					] )
 					->get();
 				break;
 		}

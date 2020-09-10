@@ -1,5 +1,6 @@
 <?php
-
+use Carbon\Carbon;
+use App\Stage;
 
 function subjects()
 {
@@ -72,4 +73,17 @@ function dateLikes($likeable_id, $likeable_type, $date)
 		->whereDate('created_at', $date)
 		->count();
 
+}
+
+
+// current stage
+function currentStage()
+{
+	// find current stage
+	$currentDate = Carbon::now()->toDateString();
+
+	return Stage::where('status', 'published')
+				->whereDate('start_date', '<=', $currentDate)
+				->whereDate('end_date', '>=', $currentDate)
+				->first();
 }

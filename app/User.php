@@ -62,4 +62,44 @@ class User extends Authenticatable
             ] )
             ->count();
     }
+
+
+    public function votes()
+    {
+        return $this
+            ->hasMany(Vote::class);
+    }
+
+
+    public function vote(array $data)
+    {
+        $count = $this
+            ->votes()
+            ->where( 'stage_id', $data[ 'stage' ] )
+            ->count();
+
+        if ( ( $count < 5 ) && ( $count + $data['count_vote'] <= 5 ) ) {
+
+            collect( range( 1, $data['count_vote'] ) )
+
+                ->each(function() use($data){
+
+                    $this
+                        ->votes()
+                        ->create( [
+                            'stage_id' => $data[ 'stage' ], 
+                            'campaign_id' => $data[ 'campaign' ] 
+                        ] );
+                    
+                });
+
+            return true;
+
+        } else {
+            return false;
+        }
+    }
+
+
+
 }

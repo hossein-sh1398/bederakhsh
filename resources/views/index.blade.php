@@ -16,6 +16,18 @@
 			text-align: left;
 			direction: ltr;
 		}
+		.alert{
+			font-size: 20px;
+			text-align: center;
+			padding: 20px;
+		}
+			
+		.red{
+			color: red;
+		}
+		.green{
+			color: green;
+		}
 		ul{
 			display: flex;
 			justify-content: flex-start;
@@ -32,15 +44,11 @@
 </head>
 <body class="{{app()->getLocale() == 'fa' ? 'right' : 'left'}}">
 	<div class="container">
-		<header>
-			<h1>{{__('messages.title')}}</h1>
-			<ul>
-				@foreach($categories as $category)
-					<li>{{$category->title}}</li>
-				@endforeach
-			</ul>
-		</header>
 		
+		@php 
+			$message = 'this is a component alert'
+		@endphp
+		<x-alert name='Hossein' :message="$message" class="red"></x-alert>
 	</div>
 </body>
 </html>

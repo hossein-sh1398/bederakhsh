@@ -17,7 +17,7 @@ Route::get('logerror', function()
 	
 });
 
-Route::get('/', 'IndexController@index');
+// Route::get('/', 'IndexController@index');
 
 Route::get('localization', 'LocalizationController@index');
 
@@ -114,3 +114,40 @@ Route::get('date', function()
 	return App\User::whereDate('created_at', '2020-09-08')
 		->get();
 });
+
+Route::get('/', 'HomeController@index');
+
+Route::get('vote', 'VoteController@form');
+Route::post('vote', 'VoteController@vote');
+
+
+Route::get('convert_date', function(){
+	// dd(\Morilog\Jalali\CalendarUtils::toGregorian(1399, 6, 20));
+	
+	// dd(\Morilog\Jalali\CalendarUtils::toJalali(2020, 9, 10));
+	// $stage = App\Stage::create([
+	// 	'name' => 'fff',
+ //    	'description' => 'dddd', 
+ //    	'vote_date' => '2020-10-1',
+ //    	'period_id' => 1, 
+ //    	'count' => 10, 
+ //    	'start_date' => '2020-9-9', 
+ //    	'end_date' => '2020-10-9',
+ //    	'status' => 'published'
+	// ]);
+	$stage = App\Stage::find(2)->first();
+	// dd($stage);
+	$currentDate = date('Y-m-d');
+
+	if ( $currentDate >= strtotime($stage->vote_date) 
+		&& $currentDate <= strtotime($stage->end_date) ) {
+
+		dd('mitavand ray bedahad');
+
+	} else {
+		dd('no');
+	}
+});
+
+
+Route::get('campaign/list', 'CampaignController@search');

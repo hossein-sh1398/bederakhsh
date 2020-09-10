@@ -16,24 +16,48 @@ class LikeController extends Controller
  	public function like(Request $request, $likeable_id )
     {
         $request->validate( [
-            'likeable_type' => [ 'required', 'string', Rule::in( 'App\Models\Article', 'App\Comment' )]
+            'likeable_type' => [ 
+                'required', 
+                'string', 
+                Rule::in( 
+                    'App\Models\Article', 
+                    'App\Comment', 'App\Video' 
+                )
+            ]
         ] );
 
-        $subject = ( new $request->likeable_type)->findOrFail( $likeable_id );
+        $subject = ( new $request->likeable_type )
+                        ->findOrFail( $likeable_id );
 
-        $user = auth()->user();
+        $user = auth()
+                    ->user();
 
         if ( $user->liked( $subject ) ) {
             
             $user
                 ->likes()
-                ->where( [ 'likeable_id' => $subject->id, 'likeable_type' => get_class( $subject ) ] )
+                ->where( [ 
+                    'likeable_id' => $subject->id, 
+                    'likeable_type' => get_class( $subject ) 
+                ] )
                 ->delete();
 
-        } else {
-            $subject->likes()->create( [ 'user_id' => auth()->id() ] );
-    	}
+            $status = 'unlike';
 
-    	return back();
+        } else {
+
+            $subject->likes()->create( [ 
+                'user_id' => auth()->id() 
+            ] );
+
+            $status = 'like';
+
+        }
+
+    	return [
+            'status' => $status,
+            'count' => $subject->likes->count();       
+        ];
+
     }  
 }
