@@ -15,16 +15,7 @@ class LikeController extends Controller
 
  	public function like(Request $request, $likeable_id )
     {
-        $request->validate( [
-            'likeable_type' => [ 
-                'required', 
-                'string', 
-                Rule::in( 
-                    'App\Models\Article', 
-                    'App\Comment', 'App\Video' 
-                )
-            ]
-        ] );
+        $request->validate( $this->likeRules() );
 
         $subject = ( new $request->likeable_type )
                         ->findOrFail( $likeable_id );
@@ -59,5 +50,16 @@ class LikeController extends Controller
             'count' => $subject->likes->count();       
         ];
 
+    }
+
+    protected function likeRules()
+    {
+        return [
+            'likeable_type' => [
+                'required', 
+                'string', 
+                Rule::in( subjects() )
+            ]
+        ];
     }  
 }

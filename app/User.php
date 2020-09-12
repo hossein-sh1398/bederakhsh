@@ -21,6 +21,9 @@ class User extends Authenticatable
         'name', 'email', 'password',
     ];
 
+    // protected $with = ['posts', 'comments'];
+    // protected $withCount = ['posts', 'comments'];
+
     /**
      * The attributes that should be hidden for arrays.
      *
@@ -43,6 +46,11 @@ class User extends Authenticatable
     public $dates = ['deleted_at'];
 
    
+    public function comments()
+    {
+        return $this
+            ->hasMany(Comment::class);
+    }
 
     //دریافت تمام لایکهای کاربر
     public function likes()

@@ -92,13 +92,13 @@ Route::get( 'admin', function() {
 	return view('admin.dashboard');
 } );
 
-Route::get('comment', 'CommentController@index');
-Route::get('comment/{comment}', 'CommentController@verify')->name('comment.verify');
-Route::delete('comment/{comment}', 'CommentController@destroy')->name('comment.destroy');
-Route::post('comment', 'CommentController@store')->name('comment.store');
-Route::post('comment/ajax', 'CommentController@ajax');
+// Route::get('comment', 'CommentController@index');
+// Route::get('comment/{comment}', 'CommentController@verify')->name('comment.verify');
+// Route::delete('comment/{comment}', 'CommentController@destroy')->name('comment.destroy');
+// Route::post('comment', 'CommentController@store')->name('comment.store');
+// Route::post('comment/ajax', 'CommentController@ajax');
 //https://sepahboursese.etadbir.com/login.html
-
+//https://www.youtube.com/watch?v=8BNldJV0Gqw
 Route::get('query-builder', 'QueryBuilderController@builder');
 
 Route::get('campaign-stage', 'CampaignStageController@index');
@@ -108,46 +108,26 @@ Route::get('video/{video}', 'VideoController@show');
 Route::get('report', 'ReportController@report');
 
 
-
-Route::get('date', function()
-{
-	return App\User::whereDate('created_at', '2020-09-08')
-		->get();
-});
-
 Route::get('/', 'HomeController@index');
 
 Route::get('vote', 'VoteController@form');
 Route::post('vote', 'VoteController@vote');
 
 
-Route::get('convert_date', function(){
-	// dd(\Morilog\Jalali\CalendarUtils::toGregorian(1399, 6, 20));
-	
-	// dd(\Morilog\Jalali\CalendarUtils::toJalali(2020, 9, 10));
-	// $stage = App\Stage::create([
-	// 	'name' => 'fff',
- //    	'description' => 'dddd', 
- //    	'vote_date' => '2020-10-1',
- //    	'period_id' => 1, 
- //    	'count' => 10, 
- //    	'start_date' => '2020-9-9', 
- //    	'end_date' => '2020-10-9',
- //    	'status' => 'published'
-	// ]);
-	$stage = App\Stage::find(2)->first();
-	// dd($stage);
-	$currentDate = date('Y-m-d');
+Route::get('campaign/list', 'CampaignController@search');
 
-	if ( $currentDate >= strtotime($stage->vote_date) 
-		&& $currentDate <= strtotime($stage->end_date) ) {
+Route::get('stage/create', 'StageController@create');
+Route::post('stage', 'StageController@store');
+Route::get('stage', 'StageController@index');
 
-		dd('mitavand ray bedahad');
-
-	} else {
-		dd('no');
-	}
+Route::get('u/{id}', function($id) {
+	dd('2020-05-20 00:00:00' > '2020-01-21 00:00:00');
+	$campaign = App\Campaign::find($id);
+	if ($campaign) {
+		if ($campaign->videos->isNotEmpty()) {
+			dd($campaign->videos->first()->id); 
+		}
+	}	
 });
 
-
-Route::get('campaign/list', 'CampaignController@search');
+Route::get('realation_sheep', 'UserController@real');

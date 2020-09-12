@@ -14,10 +14,10 @@ class CampaignStageController extends Controller
 	{
 		$params = [
 			'stage' => '',
-			'random' => collect([]),
+			'randomCampaigns' => collect([]),
 			'newcampaigns' => collect([]),
-			'views' => collect([]),
-			'last_videos' => collect([]),
+			'bestViewsCampaign' => collect([]),
+			'lastUploadedVideo' => collect([]),
 			'lastUpdated' => collect([])
 		];
 
@@ -25,7 +25,6 @@ class CampaignStageController extends Controller
 		* خواندن مرحله جاری مسابقه
 		*/
 		$stage = currentStage(); 
-
 		if ($stage) {
 			$params['stage'] = $stage;
 
@@ -39,82 +38,70 @@ class CampaignStageController extends Controller
 			*/
 			$count = $campaigns->count();
 			if ($count) {
-
 				if ($count > 8) {
 					$count = 8;
 				}
 
-				$params['random'] = $campaigns
-										->random($count);
+				$params['randomCampaigns'] = $campaigns->random($count);
 
 
 				/*
 				* خواندن 8 تا از جدیدترین شرکت کنندگان
 				*/
-				$params['newcampaigns'] = $campaigns
-											->sortByDesc('created_at')
-											->take(8);
+				$params['newcampaigns'] = $campaigns->sortByDesc('created_at')
+					->take(8);
 
 
 				/*
 				* شرکت کنندگانی که بیشترین بازدیدهارو داشتن
 				*/ 
-				$views = $campaigns
-							->map( function( $campaign ) {
+				$bestViewsCampaign = $campaigns
+					->map( function( $campaign ) {
+						return [
+							'campaign' => $campaign, 
+							'count' => $campaign->views->count()
+						];
+					});
 
-								return [
-									'campaign' => $campaign, 
-									'count' => $campaign->views->count()
-								];
-
-							});
-
-		    	$params['views'] = $views
-		    							->sortByDesc( 'count' )
-		    							->values()
-		    							->take(8);
+		    	$params['bestViewsCampaign'] = $bestViewsCampaign->sortByDesc('count')
+					->values()
+					->take(8);
 
 
 		    	/*
-		    	*شرکت منندگانی که آخرین ویریوها رو آپلود کردن
+		    	*شرکت منندگانی که آخرین ویدیوها رو آپلود کردن
 		    	*/ 
-		    	$last_videos = $campaigns
-						    	->map( function( $campaign) {
+		    	$lastUploadedVideo = $campaigns
+			    	->map( function($campaign) {
+			    		
+						$lastVideo = $campaign->videos->where('status', 'published')
+									->sortByDesc('created_at')
+			    					->first();
 
-						    		if ($campaign->videos->isNotEmpty()) {
+			    		if ( $lastVideo ) {
+				    		return [ 
+				    			'campaign' => $campaign, 
+				    			'created_at' => (string) $lastVideo->created_at
+				    		];
+			    		}
+			    	} )
+			    	->filter( function($item) {
+			    	 	if ($item) {
+			    	 		return $item;
+			    	 	}
+			    	 } );
 
-						    			$created_at = (string)$campaign
-						    							->videos
-									    				->sortByDesc('created_at')
-									    				->first()
-									    				->created_at;
+				$params['lastUploadedVideo'] = $lastUploadedVideo->sortByDesc('created_at')
+					->take(8);
 
-							    		return [ 
-							    			'campaign' => $campaign, 
-							    			'created_at' => $created_at 
-							    		];
-						    		}
-						    	})
-						    	->filter(function($item) {
 
-						    	 	if ($item) {
-						    	 		return $item;
-						    	 	}
-
-						    	 });
-
-				$params['last_videos'] = $last_videos
-											->sortByDesc('created_at')
-											->take(8);
-		    	//last updated capmaign
-		    	$params['lastUpdated'] = $campaigns
-		    								->sortByDesc('updated_at')
-		    								->take(8);
-				
+		    	/*
+		    	*آخرین کمپین هایی که اپدیت شدند.
+		    	*/
+		    	$params['lastUpdated'] = $campaigns->sortByDesc('updated_at')
+					->take(8);
 			}
 		}
-			
     	return view('bederakhsh_index', $params);
-		
 	}
 }

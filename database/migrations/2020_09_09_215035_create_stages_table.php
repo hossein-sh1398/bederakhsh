@@ -23,10 +23,10 @@ class CreateStagesTable extends Migration
                 ->references('id')
                 ->on('periods')
                 ->onDelete('cascade');
-            $table->timestamp('vote_date')->nullable();
+            $table->date('vote_date')->nullable();
             $table->smallInteger('count');
-            $table->timestamp('start_date')->nullable();
-            $table->timestamp('end_date')->nullable();
+            $table->date('start_date')->nullable();
+            $table->date('end_date')->nullable();
             $table->string('status');
             $table->timestamps();
         });

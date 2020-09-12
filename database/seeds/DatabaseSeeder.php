@@ -13,6 +13,7 @@ class DatabaseSeeder extends Seeder
     {
     	// \Schema::disableForeignKeyConstraints();
         $this->call(UserSeeder::class);
+        $this->call(CampaignTableSeeder::class);
     	// \Schema::enableForeignKeyConstraints();
 
     	// برای این که فقط یک سیدر به خصوص اجرا بشه

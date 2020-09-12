@@ -7,7 +7,9 @@ use App\Models\Like;
 
 class Comment extends Model
 {
-    protected $fillable = [ 'user_id', 'comment', 'approved', 'commentable_id', 'commentable_type', 'parent_id'];
+    protected $fillable = [ 'user_id', 'comment', 'approved', 'parent_id'];
+
+    // protected $perPage = 12;default number paginate
 
     public function likes()
     {

@@ -1,6 +1,7 @@
 <?php
 use Carbon\Carbon;
 use App\Stage;
+use \Morilog\Jalali\CalendarUtils;
 
 function subjects()
 {
@@ -86,4 +87,38 @@ function currentStage()
 				->whereDate('start_date', '<=', $currentDate)
 				->whereDate('end_date', '>=', $currentDate)
 				->first();
+}
+
+
+function toGregorian($shamsi)
+{
+	if ( is_array($shamsi) ) {
+		
+		$result = [];
+
+		foreach($shamsi as  $key => $value ) {
+
+			$result[$key] = convertt($value) ;
+		}
+
+		return $result;
+
+	} else {
+
+		return convertt($shamsi);
+	}
+}
+
+
+function convertt(string $value)
+{
+	$arrayShamsi = explode( '/', $value );
+
+	$arrayDate = CalendarUtils::toGregorian( 
+		$arrayShamsi[0], 
+		$arrayShamsi[1], 
+		$arrayShamsi[2] 
+	);
+
+	return implode('-', $arrayDate);
 }

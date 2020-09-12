@@ -12,27 +12,33 @@ class CampaignController extends Controller
     	$campaigns = collect([]);
 
 		$stage = currentStage();
-		
-		if (!$stage) {
+		if ($stage) {
 			
 	    	if ($request->q) {
 	    		
 				$campaigns = $stage
 								->campaigns()
 								->where('name', 'LIKE', '%' . $request->q . '%')
-								->paginate(1);
+								->paginate()
+								->appends(request()->query());
 
 	    	} else {
-
 				$campaigns = $stage
 								->campaigns()
-								->paginate(1);
+								->paginate();
 	    	}
 		} else {
 
-			$campaigns = Campaign::latest()->paginate(1);
+			if ($request->q) {
+				$campaigns = Campaign::where('name', 'LIKE', '%' . $request->q . '%')
+								->paginate(6)
+								->appends(request()->query());
+
+			} else {
+				$campaigns = Campaign::latest()->paginate(20);
+			}
 		}
 
-    	dd($campaigns);
+    	return view('Campaign.list', compact('campaigns'));
     }
 }
