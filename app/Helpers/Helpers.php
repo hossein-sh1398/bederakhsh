@@ -90,35 +90,31 @@ function currentStage()
 }
 
 
-function toGregorian($shamsi)
+function toGregorian($shamsiDate)
 {
-	if ( is_array($shamsi) ) {
-		
-		$result = [];
+	if ($shamsiDate) {
 
-		foreach($shamsi as  $key => $value ) {
+		if (strpos($shamsiDate, '-')) {
 
-			$result[$key] = convertt($value) ;
+			$shamsiDate = str_replace('-', '/', $shamsiDate);
 		}
+			
 
-		return $result;
+		$arrayShamsi = explode( '/', $shamsiDate );
 
-	} else {
+		if (is_array($arrayShamsi)) {
 
-		return convertt($shamsi);
+			if ( count($arrayShamsi) == 3 ) {
+
+				$miladiDate = CalendarUtils::toGregorian( intval($arrayShamsi[0]), intval($arrayShamsi[1]), intval($arrayShamsi[2]) );
+				
+				return implode('-', $miladiDate);
+				
+			}
+		}
 	}
+			
+	return null;
 }
 
 
-function convertt(string $value)
-{
-	$arrayShamsi = explode( '/', $value );
-
-	$arrayDate = CalendarUtils::toGregorian( 
-		$arrayShamsi[0], 
-		$arrayShamsi[1], 
-		$arrayShamsi[2] 
-	);
-
-	return implode('-', $arrayDate);
-}

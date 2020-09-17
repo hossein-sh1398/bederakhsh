@@ -174,7 +174,7 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-        Vandaw\Cart\CartServiceProvider::class,
+        App\Services\CartServiceProvider::class,
 
     ],
 
@@ -227,7 +227,7 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-        'CartFacade' => Vandaw\Cart\CartFacade::class,
+        'Cart' => App\Services\Cart::class,
 
     ],
 

@@ -11,6 +11,5 @@
 |
 */
 
-Route::prefix('discount')->group(function() {
-    Route::get('/', 'DiscountController@index');
-});
+Route::post('discount/check', 'DiscountController@check')->name('discount.check');
+

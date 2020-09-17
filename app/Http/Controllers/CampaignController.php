@@ -35,7 +35,7 @@ class CampaignController extends Controller
 								->appends(request()->query());
 
 			} else {
-				$campaigns = Campaign::latest()->paginate(20);
+				$campaigns = Campaign::latest()->paginate(4);
 			}
 		}
 

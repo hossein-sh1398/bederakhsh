@@ -5,12 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Article;
 use Carbon\Carbon;
+
 class ArticleController extends Controller
 {
 
 	public function create()
 	{
-
 		return view('editor');
 	}
 
@@ -27,5 +27,4 @@ class ArticleController extends Controller
 
     	return view('article', compact('article'));
     }
-
 }

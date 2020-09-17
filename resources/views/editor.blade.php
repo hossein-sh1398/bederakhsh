@@ -47,8 +47,8 @@
 				<hr>
 				<ul class="list-group">
 					@foreach( $articles as $key => $article )
-						<li class="list-group-item">
-							<form method="post" action="{{ route( 'like', $article->id ) }}">
+						<li class="list-group-item"> 
+						<form method="post" action="{{ route( 'like', $article->id ) }}">
 								@csrf
 								<input type="hidden" name="likeable_type" value="{{ get_class( $article ) }}">
 								<button type="submit" class="btn btn-success">Like</button>

@@ -47,7 +47,7 @@ class LikeController extends Controller
 
     	return [
             'status' => $status,
-            'count' => $subject->likes->count();       
+            'count' => $subject->likes->count()      
         ];
 
     }

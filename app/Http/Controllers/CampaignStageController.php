@@ -49,7 +49,7 @@ class CampaignStageController extends Controller
 				* خواندن 8 تا از جدیدترین شرکت کنندگان
 				*/
 				$params['newcampaigns'] = $campaigns->sortByDesc('created_at')
-					->take(8);
+											->take(8);
 
 
 				/*
@@ -64,8 +64,8 @@ class CampaignStageController extends Controller
 					});
 
 		    	$params['bestViewsCampaign'] = $bestViewsCampaign->sortByDesc('count')
-					->values()
-					->take(8);
+												->values()
+												->take(8);
 
 
 		    	/*
@@ -75,8 +75,8 @@ class CampaignStageController extends Controller
 			    	->map( function($campaign) {
 			    		
 						$lastVideo = $campaign->videos->where('status', 'published')
-									->sortByDesc('created_at')
-			    					->first();
+										->sortByDesc('created_at')
+			    						->first();
 
 			    		if ( $lastVideo ) {
 				    		return [ 
@@ -92,16 +92,16 @@ class CampaignStageController extends Controller
 			    	 } );
 
 				$params['lastUploadedVideo'] = $lastUploadedVideo->sortByDesc('created_at')
-					->take(8);
+												->take(8);
 
 
 		    	/*
 		    	*آخرین کمپین هایی که اپدیت شدند.
 		    	*/
 		    	$params['lastUpdated'] = $campaigns->sortByDesc('updated_at')
-					->take(8);
+											->take(8);
 			}
 		}
-    	return view('bederakhsh_index', $params);
+    	return $params;
 	}
 }

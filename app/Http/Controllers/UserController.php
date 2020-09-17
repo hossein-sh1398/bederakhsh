@@ -58,7 +58,7 @@ class UserController extends Controller
     	// 	'password' => 'ffff'
     	// ]);
     	// $user->save();
-    	// $profile->user()->associate($user);
+    	//$profile->user()->associate($user);
     	// $profile->save()
 
     	// $post->tags()->attach([1,2,3]);

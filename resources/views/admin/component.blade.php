@@ -1,10 +1,13 @@
 
 @extends('layouts.admin')
 
+@section('breadcrumb')
+	{{$breadcrumb}}
+@endsection
 
-@section('content')
+@section('body')
 
-	{{$content ?? ''}}
+	{{$body ?? ''}}
 
 @endsection
 
@@ -16,4 +19,8 @@
 	{{$script ?? ''}}
 @endsection
 
+@section('css')
 	
+	{{$css ?? ''}}
+
+@endsection

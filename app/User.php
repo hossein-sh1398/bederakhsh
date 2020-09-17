@@ -7,6 +7,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use App\Models\Like;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Modules\Discount\Entities\Discount;
+use App\User;
 
 class User extends Authenticatable
 {
@@ -57,6 +59,7 @@ class User extends Authenticatable
     {
         return $this
             ->hasMany(Like::class);
+            
     }
 
     // چک میکنه این که آیا کاربر در باره فلان مدل لایکی دارد
@@ -109,5 +112,14 @@ class User extends Authenticatable
     }
 
 
+    public function discounts()
+    {
+        return $this->belongsToMany(Discount::class);
+    }
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
 
 }
