@@ -4,32 +4,33 @@ use Illuminate\Support\Facades\Route;
 use Vandaw\Cart\CartFacade;
 use Illuminate\Notifications\Messages\MailMessage;
 use App\Exceptions\MyException;
+use Illuminate\Support\Facades\Gate;
 
+Route::get('test-permishon', 'PermishnController@test');
 
 Route::get('products', 'ProductController@list');
-
-Route::post('cart/add/{product}', 'CartController@addToCart')->name('cart.add');
-
-
-Route::get('cart', 'CartController@cart')->name('cart');
-
-Route::patch('cart/quantity/change', 'CartController@changeQuantity')->name('cart.change.quantity');
-
-Route::get('cart/item/{id}/delete', 'CartController@deleteItemCart')->name('cart.item.delete');
 
 Route::post('cart/payment', 'PaymentController@payment')->name('cart.payment');
 Route::post('payment/callback', 'PaymentController@callback')->name('payment.callback');
 
 
+Route::get('module', function(){
+    $module = Module::find('Discount');
+     $module->disable();
+    dd (array_keys(\Module::getByStatus(1)));
+});
 
-
-
-
-
-
-
-
-
+Route::get('login-test', function(){
+    \Auth::logout();
+    \Auth::attempt([
+        'email' => 'hosseinshirinegad98@gmail.com',
+        'password' => '_hossein'
+    ]);
+    if (\Auth::check()) {
+        dd(auth()->user()->name);
+    }
+    dd('faild login');
+});
 
 
 

@@ -13,3 +13,4 @@
 
 Route::post('discount/check', 'DiscountController@check')->name('discount.check');
 
+Route::get('discount/delete', 'DiscountController@delete')->name('discount.delete');

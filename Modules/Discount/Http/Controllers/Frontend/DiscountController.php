@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Modules\Discount\Entities\Discount;
 use Carbon\Carbon;
+use Modules\Cart\Services\Cart;
 
 class DiscountController extends Controller
 {
@@ -40,7 +41,17 @@ class DiscountController extends Controller
             }
         }
         
-        dd('برای این کاربر هم هست');
+        Cart::addDiscount($code->id);
+
+        return back();
 
     }
+
+    public function delete()
+    {
+        Cart::addDiscount(null);
+        
+        return back();
+    }
+   
 }

@@ -1,0 +1,15 @@
+{
+    "name": "Main",
+    "alias": "main",
+    "title":"ماژول اصلی",
+    "description": "ماژول اصلی برای مدریت بقیه ماژول ها",
+    "keywords": [],
+    "order": 0,
+    "providers": [
+        "Modules\\Main\\Providers\\MainServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": [],
+    "canDisable":false
+}

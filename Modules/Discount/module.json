@@ -1,7 +1,8 @@
 {
     "name": "Discount",
+    "title":"ماژول تخفیف",
     "alias": "discount",
-    "description": "",
+    "description": "برای اعمال تخفیف در سبد خرید",
     "keywords": [],
     "order": 0,
     "providers": [
@@ -9,5 +10,6 @@
     ],
     "aliases": {},
     "files": [],
-    "requires": []
+    "requires": [],
+    "canDisable":true
 }

@@ -45,10 +45,8 @@ class PaymentController extends Controller
 		    	$resNumber = Str::random(20);
 
 				$args = [
-				    "amount" => '1000',
-				    "payerIdentity" => "شناسه کاربر در صورت وجود",
+				    "amount" => $order->price,
 				    "payerName" => auth()->user()->name,
-				    "description" => "توضیحات",
 				    "returnUrl" => route('payment.callback'),
 				    "clientRefId" => $resNumber
 				];
@@ -109,3 +107,4 @@ class PaymentController extends Controller
 		}
     }
 }
+

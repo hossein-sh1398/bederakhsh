@@ -1,0 +1,19 @@
+{
+    "name": "Cart",
+    "title": "ماژول سبد خرید",
+    "alias":"cart",
+    "description": "برای پیاده سازی سبد خرید در ماژول تخفیف می باشد",
+    "keywords": [
+
+    ],
+    "order": 0,
+    "providers": [
+        "Modules\\Cart\\Providers\\CartServiceProvider"
+    ],
+    "aliases": {
+        "Cart": "Modules\\Cart\\Services\\Cart"
+    },
+    "files": [],
+    "requires": [],
+    "canDisable":true
+}

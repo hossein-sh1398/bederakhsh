@@ -30,5 +30,11 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('allow_to_vote_campaign', function(User $user, Campaign $campaign) {
             return $user->id != $campaign->user_id;
         });
+
+        Gate::define('show-user', function(User $user){
+            if ($user->permishns->contains('name', 'show-user')){
+                return 1;
+            }
+        });
     }
 }

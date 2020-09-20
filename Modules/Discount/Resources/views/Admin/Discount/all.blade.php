@@ -51,12 +51,15 @@
 								<td>{{$discount->products->count() ? $discount->products->pluck('name')->join(', ') : 'همه محصولات'}}</td>
 								<td>{{$discount->categories->count() ? $discount->categories->pluck('title')->join(', ') : 'همه دسته بندی ها'}}</td>
 								<td>
-									<a href="{{route('admin.discount.edit', $discount->code)}}" class="btn btn-warning bnt-sm">ویرایش</a>
-									<form action="{{route('admin.discount.destroy', $discount->code)}}" method="post">
-										@csrf
-										@method('delete')
-										<button type="submit" class="btn btn-danger btn-sm">حذف</button>
-									</form>
+									<div class="d-flex justify-content-between">
+										<a href="{{route('admin.discount.edit', $discount->code)}}" class="btn btn-warning btn-sm ml-1">ویرایش</a>
+										<form action="{{route('admin.discount.destroy', $discount->code)}}" method="post">
+											@csrf
+											@method('delete')
+											<button type="submit" class="btn btn-danger btn-sm">حذف</button>
+										</form>
+									</div>
+										
 								</td>
 							</tr>
 						@endforeach

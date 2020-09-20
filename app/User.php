@@ -122,4 +122,9 @@ class User extends Authenticatable
         return $this->hasMany(Order::class);
     }
 
+    public function permishns()
+    {
+        return $this->belongsToMany(Permishn::class);
+    }
+
 }

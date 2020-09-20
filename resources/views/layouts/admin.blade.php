@@ -203,6 +203,14 @@
                 </li>
               </ul>
             </li>
+            @foreach(\Module::collections() as $module)
+                @php
+                    $name = strtolower($module->get('name'));
+                @endphp
+                  @include("{$name}::Admin.sidebar")
+            @endforeach
+            
+            
             <!-- <li class="nav-item">
               <a href="pages/widgets.html" class="nav-link">
                 <i class="nav-icon fa fa-th"></i>

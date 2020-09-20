@@ -1,5 +1,6 @@
 {
     "Cart": true,
     "Comment": true,
-    "Discount": true
+    "Discount": true,
+    "Main": true
 }
