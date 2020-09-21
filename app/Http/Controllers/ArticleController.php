@@ -27,4 +27,6 @@ class ArticleController extends Controller
 
     	return view('article', compact('article'));
     }
+
+   
 }

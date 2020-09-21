@@ -20,8 +20,7 @@ class LikeController extends Controller
         $subject = ( new $request->likeable_type )
                         ->findOrFail( $likeable_id );
 
-        $user = auth()
-                    ->user();
+        $user = auth()->user();
 
         if ( $user->liked( $subject ) ) {
             

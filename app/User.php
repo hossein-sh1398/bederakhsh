@@ -85,15 +85,15 @@ class User extends Authenticatable
     public function vote(array $data)
     {
         $count = $this
-            ->votes()
-            ->where( 'stage_id', $data[ 'stage' ] )
-            ->count();
+                    ->votes()
+                    ->where( 'stage_id', $data[ 'stage' ] )
+                    ->count();
 
-        if ( ( $count < 5 ) && ( $count + $data['count_vote'] <= 5 ) ) {
+        if ( $this->checkCountVote( $count, $data['count_vote'] ) ) {
 
             collect( range( 1, $data['count_vote'] ) )
 
-                ->each(function() use($data){
+                ->each( function() use ($data) {
 
                     $this
                         ->votes()
@@ -107,8 +107,15 @@ class User extends Authenticatable
             return true;
 
         } else {
+
             return false;
+            
         }
+    }
+
+    private function checkCountVote($count, $count_vote)
+    {
+        return ( $count < 5 ) && ( $count + $count_vote <= 5 );
     }
 
 
