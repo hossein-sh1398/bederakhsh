@@ -5,6 +5,25 @@ use Vandaw\Cart\CartFacade;
 use Illuminate\Notifications\Messages\MailMessage;
 use App\Exceptions\MyException;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Http\Request;
+
+
+Route::get('coll', 'CollectionController@coll');
+Route::get('morph', 'ArticleController@morph');
+
+Route::get('sort', function(){
+    $collection = collect([
+        ['name' => 'Desk', 'colors' => ['Black', 'Mahogany']],
+        ['name' => 'Chair', 'colors' => ['Black']],
+        ['name' => 'Bookcase', 'colors' => ['Red', 'Beige', 'Brown']],
+    ]);
+
+    $sorted = $collection->sortBy(function ($product, $key) {
+        return count($product['colors']);
+    });
+
+    return $sorted->values()->all();
+});
 
 Route::get('test-permishon', 'PermishnController@test');
 
@@ -18,6 +37,22 @@ Route::get('module', function(){
     $module = Module::find('Discount');
      $module->disable();
     dd (array_keys(\Module::getByStatus(1)));
+});
+
+Route::get('add-request', function(Request $request) {
+    // //ابتدا باید یوزرو سیو کنی چون به آیدیش نیاز داریم
+    // $user = User::create();
+    // //-------------------------
+    // foreach ($request->images as $image) {
+
+    //     $image_id = MediaFileService::upload($image);
+
+    //     \DB::table('user_media')->insert([
+    //         'user_id' => $user->id,
+    //         'image_id' => $image_id,
+    //     ]);
+    // }
+
 });
 
 Route::get('login-test', function(){
@@ -153,3 +188,12 @@ Route::get('campaign/list', 'CampaignController@search');
 Route::get('realation_sheep', 'UserController@real');
 
  
+ Route::post('user', function(){
+     \Auth::logout();
+ });
+
+ Route::get('log-out', function(){
+    return view('log');
+ });
+
+ Route::post('user-store', 'UserController@store');

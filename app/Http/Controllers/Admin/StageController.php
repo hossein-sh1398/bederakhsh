@@ -69,4 +69,22 @@ class StageController extends Controller
 			'period_id' => 'required|exists:periods,id|numeric'
     	];
     }
+
+    public function update(Request $request, Stage $stage)
+    {
+        $data = $request->validate($this->storeRules());
+
+        $stage->name        = $data['name'];
+        $stage->description = $data['description'];
+        $stage->count       = $data['count'];
+        $stage->start_date  = toGregorian( $data['start_date'] );
+        $stage->end_date    = toGregorian( $data['end_date'] );
+        $stage->vote_date   = toGregorian( $data['vote_date'] );
+        $stage->status      = $data['status'];
+        $stage->period_id   = $data['period_id'];
+        $stage->update();
+
+        alert()->success('add success fully', 'success');
+        return back();
+    }
 }

@@ -20,7 +20,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'username', 'password',
     ];
 
     // protected $with = ['posts', 'comments'];
@@ -132,6 +132,11 @@ class User extends Authenticatable
     public function permishns()
     {
         return $this->belongsToMany(Permishn::class);
+    }
+
+    public function campaign()
+    {
+        return $this->hasOne(Campaign::class);
     }
 
 }

@@ -16,7 +16,7 @@ class UserController extends Controller
             'password' => bcrypt( 'abcdefjhigklmnopqrstuvwxyz')
         ] );
 
-        event( new RegisterUserEvent() );
+        //event( new RegisterUserEvent() );
 
     }
 
@@ -78,8 +78,17 @@ class UserController extends Controller
     	//$posts->onEachSide(2)
 
     	// dd(User::find(1)->comments->where('approved', 1));
+    }
 
-   
 
+    public function store(Request $request)
+    {
+        $user = new User;
+        $user->name = $request->name;
+        $user->username = $request->username;
+        $user->password = $request->password;
+        $user->save();
+
+        return 'success';
     }
 }

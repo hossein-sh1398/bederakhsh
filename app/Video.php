@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Video extends Model
 {
-    protected $fillable = ['title', 'campaign_id'];
+    protected $fillable = ['title', 'campaign_id', 'created_at'];
 
     public function comments()
     {
@@ -16,5 +16,12 @@ class Video extends Model
     public function views()
     {
     	return $this->morphMany(View::class, 'viewable');
+    }
+
+    public $timestamps = false;
+
+    public function tags()
+    {
+        return $this->morphToMany(Tag::class, 'taggable');
     }
 }

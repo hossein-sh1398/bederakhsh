@@ -22,7 +22,7 @@ class CreateCampaignsTable extends Migration
 
             $table->unsignedBigInteger('user_id');
             
-            $table->string('stauts')->default('published');
+            $table->string('status')->default('published');
             $table->timestamps();
         });
     }

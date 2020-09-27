@@ -7,11 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class Campaign extends Model
 {
     protected $fillable = [
-        'name', 
+        'firstname', 
+        'lastname', 
         'user_id',
         'display_name',
-        'cover',
-        'participant_image',
+        'status'
     ];
     
     public function comments()

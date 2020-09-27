@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use App\Comment;
 use App\View;
+use App\Tag;
 
 class Article extends Model
 {
@@ -33,5 +34,9 @@ class Article extends Model
         return $this->morphMany(View::class, 'viewable');
     }
 
+    public function tags()
+    {
+        return $this->morphToMany(Tag::class, 'taggable');
+    }
 
 }

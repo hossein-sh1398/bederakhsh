@@ -11,9 +11,10 @@ class CampaignTableSeeder extends Seeder
      */
     public function run()
     {
-        $user = [13,14,15,16,17,18,18,21,21,50,51,52,53,54,55,56,57,58,59,60];
-        collect($user)->each(function($id){
-        	factory(App\Campaign::class)->create(['user_id' => $id]);
+        $users = App\User::get();
+
+        $users->each(function($user){
+        	factory(App\Campaign::class)->create(['user_id' => $user->id]);
         });
     }
 }

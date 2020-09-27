@@ -8,6 +8,9 @@ use App\Campaign;
 
 $factory->define(Campaign::class, function (Faker $faker) {
     return [
-        'name' => $faker->name
+        'firstname' => $faker->name,
+        'lastname' => $faker->name,
+        'display_name' => $faker->name,
+        'status' => 'published'
     ];
 });

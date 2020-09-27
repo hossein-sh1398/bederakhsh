@@ -14,92 +14,57 @@ class CampaignStageController extends Controller
 	{
 		$params = [
 			'stage' => '',
-			'randomCampaigns' => collect([]),
-			'newcampaigns' => collect([]),
-			'bestViewsCampaign' => collect([]),
-			'lastUploadedVideo' => collect([]),
-			'lastUpdated' => collect([])
+			'random_campaigns' => collect([]),
+			'new_campaigns' => collect([]),
+			'best_views_campaigns' => collect([]),
+			'last_upload_video' => collect([]),
+			'last_updated' => collect([])
 		];
-
 		/*
 		* خواندن مرحله جاری مسابقه
 		*/
-		$stage = currentStage(); 
-		if ($stage) {
-			$params['stage'] = $stage;
 
+		if ($stage = currentStage()) {
+
+			$params['stage'] = $stage; 
 			/*
 			*خواندن تمام شرکت کنندگان مرحله جاری
 			*/
-			$campaigns = $stage->campaigns; 
-
+			$campaigns = $stage->campaigns;
 			/*
 			*خواندن تعداد 8 شرکت کننده به صورت رندوم
 			*/
-			$count = $campaigns->count();
-			if ($count) {
-				if ($count > 8) {
-					$count = 8;
-				}
+			if ($campaigns->isNotEmpty()) {
 
-				$params['randomCampaigns'] = $campaigns->random($count);
-
-
+				$random_campaigns = $campaigns->shuffle()->take(8);
 				/*
 				* خواندن 8 تا از جدیدترین شرکت کنندگان
 				*/
-				$params['newcampaigns'] = $campaigns->sortByDesc('created_at')
-											->take(8);
-
+				$new_campaigns = $campaigns->sortByDesc('created_at')->values()->take(8);
 
 				/*
 				* شرکت کنندگانی که بیشترین بازدیدهارو داشتن
-				*/ 
-				$bestViewsCampaign = $campaigns
-					->map( function( $campaign ) {
-						return [
-							'campaign' => $campaign, 
-							'count' => $campaign->views->count()
-						];
-					});
-
-		    	$params['bestViewsCampaign'] = $bestViewsCampaign->sortByDesc('count')
-												->values()
-												->take(8);
-
+				*/
+				$best_views_campaigns = $campaigns->sortByDesc( function( $campaign ) {
+						return $campaign->views->count();
+					})->take(8);
 
 		    	/*
 		    	*شرکت منندگانی که آخرین ویدیوها رو آپلود کردن
 		    	*/ 
-		    	$lastUploadedVideo = $campaigns
-			    	->map( function($campaign) {
-			    		
-						$lastVideo = $campaign->videos->where('status', 'published')
-										->sortByDesc('created_at')
-			    						->first();
-
-			    		if ( $lastVideo ) {
-				    		return [ 
-				    			'campaign' => $campaign, 
-				    			'created_at' => (string) $lastVideo->created_at
-				    		];
-			    		}
-			    	} )
-			    	->filter( function($item) {
-			    	 	if ($item) {
-			    	 		return $item;
-			    	 	}
-			    	 } );
-
-				$params['lastUploadedVideo'] = $lastUploadedVideo->sortByDesc('created_at')
-												->take(8);
-
+		    	$params['last_upload_video'] = $campaigns->sortByDesc(function($campaign) {
+						if ($campaign->videos->isNotEmpty()) {
+							return $campaign->videos->where('status', 'published')
+									->sortBy('created_at')
+									->last()->created_at;
+						}
+			    	})->values()->take(8);
 
 		    	/*
 		    	*آخرین کمپین هایی که اپدیت شدند.
 		    	*/
-		    	$params['lastUpdated'] = $campaigns->sortByDesc('updated_at')
-											->take(8);
+		    	$params['last_updated'] = $campaigns->sortByDesc('updated_at')->take(8);
+
 			}
 		}
     	return $params;

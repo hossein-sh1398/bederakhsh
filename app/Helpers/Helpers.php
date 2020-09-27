@@ -84,8 +84,8 @@ function currentStage()
 	$currentDate = Carbon::now()->toDateString();
 
 	return Stage::where('status', 'published')
-				->whereDate('start_date', '<=', $currentDate)
-				->whereDate('end_date', '>=', $currentDate)
+				->where('start_date', '<=', $currentDate)
+				->where('end_date', '>=', $currentDate)
 				->first();
 }
 
@@ -99,7 +99,6 @@ function toGregorian($shamsiDate)
 			$shamsiDate = str_replace('-', '/', $shamsiDate);
 		}
 			
-
 		$arrayShamsi = explode( '/', $shamsiDate );
 
 		if (is_array($arrayShamsi)) {
