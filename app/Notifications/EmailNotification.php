@@ -7,18 +7,21 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class EmailNotification extends Notification 
+class EmailNotification extends Notification implements ShouldQueue
 {
     use Queueable;
+
     public $name;
+    public $family;
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($name)
+    public function __construct($name, $family)
     {
         $this->name = $name;
+        $this->family = $family;
     }
 
     /**
@@ -29,7 +32,7 @@ class EmailNotification extends Notification
      */
     public function via($notifiable)
     {
-        return ['database'];
+        return ['database', 'mail'];
     }
 
     /**
@@ -41,7 +44,7 @@ class EmailNotification extends Notification
     // public function toMail($notifiable)
     // {
     //     return (new MailMessage)
-    //         ->view('emails.email', ['name' => $this->name]);
+    //         ->view('emails.email', ['name' => $this->name, 'family' => $this->family]);
     // }
 
     /**
@@ -53,8 +56,8 @@ class EmailNotification extends Notification
     public function toDatabase ($notifiable)
     {
         return [
-            'name' => 'hossein',
-            'family' => 'shirinegad'
+            'name' => $this->name,
+            'family' => $this->family
         ];
     }
 

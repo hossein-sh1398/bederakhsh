@@ -7,6 +7,9 @@ use App\Exceptions\MyException;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
 
+Route::get('sidebar', function(){
+    return view('sidebar');
+});
 
 Route::get('coll', 'CollectionController@coll');
 Route::get('morph', 'ArticleController@morph');
@@ -155,7 +158,7 @@ Route::get('send', 'NotificationController@email');
 Route::get('getMessageNotification', 'NotificationController@getMessageNotification');
 
 
-Auth::routes();
+Auth::routes(['verify' => true]);
 
 Route::get('/home', 'HomeController@index')->name('home');
 
@@ -197,3 +200,21 @@ Route::get('realation_sheep', 'UserController@real');
  });
 
  Route::post('user-store', 'UserController@store');
+ //hossein13660630 pass github
+
+ Route::get('auth/github', 'Auth\GithubAuthController@redirect')->name('auth.github');
+ Route::get('auth/github/callback', 'Auth\GithubAuthController@callback')
+    ->name('auth.github.callback');
+
+ Route::get('auth/google', 'Auth\GoogleAuthController@redirect')->name('auth.google');
+ Route::get('google/callback', 'Auth\GoogleAuthController@callback')
+    ->name('google.callback');
+
+
+Route::get('secret', function() {
+    return 'secret';
+})->middleware(['auth', 'password.confirm']);
+
+Route::get('email-verifid', function() {
+    return 'email verify successfull';
+})->middleware('verified');

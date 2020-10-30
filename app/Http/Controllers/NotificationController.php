@@ -5,25 +5,22 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Notifications\EmailNotification;
 use Illuminate\Support\Facades\Notification;
+use App\User;
 
 class NotificationController extends Controller
 {
     public function email()
     {
-        // auth()->loginUsingId(1);
-
-        $user = auth()->user();
-        for ( $i = 0; $i < 10 ; $i++ ) { 
-            $list[] = $user; //->notify(new EmailNotification('hossein'));
-        }
-
-        Notification::send( $list, new EmailNotification( 'hossein' ) );
-
+        $user = User::find(39);
+        Notification::send([$user, $user], new EmailNotification('Mohammad', 'Zahedi'));
     }
 
     public function getMessageNotification()
     {
+        auth()->loginUsingId(39);
         return auth()->user()->notifications;
+        return auth()->user()->readNotifications;
+        return auth()->user()->unReadNotifications;
     }
 
     //

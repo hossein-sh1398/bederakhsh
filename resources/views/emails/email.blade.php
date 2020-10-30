@@ -4,6 +4,6 @@
 	<title></title>
 </head>
 <body>
-	<h3>Hello {{$name}}</h3>
+	<h3>Hello {{$name}} {{$family}}</h3>
 </body>
 </html>

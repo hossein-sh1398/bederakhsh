@@ -35,8 +35,10 @@ class CampaignStageController extends Controller
 			*خواندن تعداد 8 شرکت کننده به صورت رندوم
 			*/
 			if ($campaigns->isNotEmpty()) {
+				$count = $campaigns->count();
+				$count = $count > 8 ? 8 : $count;
+				$random_campaigns = $campaigns->random($count);
 
-				$random_campaigns = $campaigns->shuffle()->take(8);
 				/*
 				* خواندن 8 تا از جدیدترین شرکت کنندگان
 				*/
